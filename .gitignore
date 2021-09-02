@@ -4,6 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### DB ###
+
+/databse/dio.mv.db
+
 ### STS ###
 .apt_generated
 .classpath

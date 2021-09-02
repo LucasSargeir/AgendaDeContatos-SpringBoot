@@ -1,15 +1,16 @@
-<h2>Digital Innovation: Expert class - Desenvolvendo um sistema de gerenciamento de pessoas em API REST com Spring Boot</h2>
+# API de Agenda de Contatos
 
-Nesta live coding vamos desenvolver um pequeno sistema para o gerenciamento de contatos através de uma API REST, criada com o Spring Boot.
+Projeto construido no bootcamp Satander, disponibilizado pela Digital Innovation One (DIO). O projeto consiste em uma API para controle de ponto, e foi construida utilizando o *framework [Spring Boot](https://spring.io/projects/spring-boot)*.
 
-Durante a sessão, serão desenvolvidos e abordados os seguintes tópicos:
 
-* Setup inicial de projeto com o Spring Boot Initialzr 
-* Criação de modelo de dados para o mapeamento de entidades em bancos de dados
-* Desenvolvimento de operações de gerenciamento de usuários (Cadastro, leitura, atualização e remoção de pessoas de um sistema).
-* Relação de cada uma das operações acima com o padrão arquitetural REST, e a explicação de cada um dos conceitos REST envolvidos durante o desenvolvimento do projeto.
-* Desenvolvimento de testes unitários para validação das funcionalidades
-* Implantação do sistema na nuvem através do Heroku
+
+Esse projeto inclui:
+
+- Criação da API para *CRUD* (Create, Read, Update e Delete) de uma pessoa e seus telefones;
+
+- Testes unitários.
+
+
 
 Para executar o projeto no terminal, digite o seguinte comando:
 
@@ -17,33 +18,140 @@ Para executar o projeto no terminal, digite o seguinte comando:
 mvn spring-boot:run 
 ```
 
-Após executar o comando acima, basta apenas abrir o seguinte endereço e visualizar a execução do projeto:
 
+
+Após executar o comando acima, basta apenas abrir o seguinte endereço `http://localhost:8080` utilizando as rotas abaixo:
+
+
+
+#### Rotas
+
+Criar usuário
+
+<div style="display:flex; flex-direction:row">
+    <div style="background-color:#936ae4; border-radius:5px; width: 100px; color:white; text-align:center; ">
+        <b>POST</b>
+    </div> 
+    <code>
+        /api/v1/people
+    </code>
+</div>
+
+**Corpo da requisição**
+
+```json
+{
+	"firstName": "Lucas",
+	"lastName":"Sargeiro",
+	"cpf": "142.269.727-40",
+	"birthDate": "03-10-2021",
+	"phones":[
+		{
+			"type": "MOBILE",
+			"number": "(11)8888-8888"
+ 		},
+		{
+			"type": "MOBILE",
+			"number": "(11)7777-7777"
+ 		}
+	]
+}
 ```
-http://localhost:8080/api/v1/people
+
+
+
+Buscar todos os usuários
+
+<div style="display:flex; flex-direction:row">
+    <div style="background-color:green; border-radius:5px; width: 100px; color:white; text-align:center; ">
+        <b>
+            GET
+        </b>
+    </div>
+    <code>
+        /api/v1/people
+    </code>
+</div>
+
+
+
+Buscar um usuário
+
+<div style="display:flex; flex-direction:row">
+    <div style="display:flex; flex-direction:row">
+    <div style="background-color:green; border-radius:5px; width: 100px; color:white; text-align:center; ">
+        <b>
+            GET
+        </b>
+    </div>
+    <code>
+        /api/v1/people/{id}
+    </code>
+</div>
+
+- *{id}* - Identificador do usuário que está sendo buscado
+
+
+
+Atualizar um usuário
+
+<div style="display:flex; flex-direction:row">
+    <div style="background-color:orange; border-radius:5px; width: 100px; color:white; text-align:center; ">
+        <b>
+            PUT
+        </b>
+    </div>
+    <code>
+        /api/v1/people/{id}
+    </code>
+</div>
+
+- *{id}* - Identificador do usuário que está sendo buscado
+
+```json
+{
+  "id": 1,
+  "firstName": "Lucas",
+  "lastName": "Sargeiro",
+  "cpf": "142.269.737-12",
+  "birthDate": "03-06-2021",
+  "phones": [
+    {
+      "id": 1,
+      "type": "MOBILE",
+      "number": "(11)8888-8888"
+    },
+    {
+      "id": 2,
+      "type": "MOBILE",
+      "number": "(11)7777-7777"
+    }
+  ]
+}
 ```
 
 
-São necessários os seguintes pré-requisitos para a execução do projeto desenvolvido durante a aula:
 
-* Java 11 ou versões superiores.
-* Maven 3.6.3 ou versões superiores.
-* Intellj IDEA Community Edition ou sua IDE favorita.
-* Controle de versão GIT instalado na sua máquina.
-* Conta no GitHub para o armazenamento do seu projeto na nuvem.
-* Conta no Heroku para o deploy do projeto na nuvem
-* Muita vontade de aprender e compartilhar conhecimento :)
+Excluir um usuário
 
-Abaixo, seguem links bem bacanas, sobre tópicos mencionados durante a aula:
+<div style="display:flex; flex-direction:row">
+    <div style="background-color:red; border-radius:5px; width: 100px; color:white; text-align:center; ">
+        <b>
+            DELETE
+        </b>
+    </div> 
+    <code>
+        /api/v1/people/{id}
+    </code>
+</div>
 
-* [SDKMan! para gerenciamento e instalação do Java e Maven](https://sdkman.io/)
-* [Referência do Intellij IDEA Community, para download](https://www.jetbrains.com/idea/download)
-* [Palheta de atalhos de comandos do Intellij](https://resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf)
-* [Site oficial do Spring](https://spring.io/)
-* [Site oficial do Spring Initialzr, para setup do projeto](https://start.spring.io/)
-* [Site oficial do Heroku](https://www.heroku.com/)
-* [Site oficial do GIT](https://git-scm.com/)
-* [Site oficial do GitHub](http://github.com/)
-* [Documentação oficial do Lombok](https://projectlombok.org/)
-* [Documentação oficial do Map Struct](https://mapstruct.org/)
-* [Referência para o padrão arquitetural REST](https://restfulapi.net/)
+- *{id}* - Identificador do usuário que está sendo buscado
+
+
+
+------
+
+### Banco de Dados
+
+Para o banco foi utilizado o H2. A página de administração do banco pode ser acessada por [aqui](http://localhost:8080/h2).
+
