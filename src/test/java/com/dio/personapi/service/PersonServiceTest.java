@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -37,12 +38,11 @@ public class PersonServiceTest{
 		PersonDTO personDTO = createFakeDTO();
 		Person expectedSavedPerson = createFakeEntity();
 
-		when(personMapper.toModel(personDTO)).thenReturn(expectedSavedPerson);
 		when(personRepository.save(any(Person.class))).thenReturn(expectedSavedPerson);
 
 		MessageResponseDTO successMessage = personService.createPerson(personDTO);
 
-		assertEquals("Person successfully created with ID 1", successMessage.getMessage());
+		assertEquals("Person successfully created with ID: 1", successMessage.getMessage());
 	}
 
 	@Test
@@ -52,14 +52,13 @@ public class PersonServiceTest{
 		expectedPersonDTO.setId(expectedSavedPerson.getId());
 
 		when(personRepository.findById(expectedSavedPerson.getId())).thenReturn(Optional.of(expectedSavedPerson));
-		when(personMapper.toDTO(expectedSavedPerson)).thenReturn(expectedPersonDTO);
-
 		PersonDTO personDTO = personService.findById(expectedSavedPerson.getId());
-
-		assertEquals(expectedPersonDTO, personDTO);
 
 		assertEquals(expectedSavedPerson.getId(), personDTO.getId());
 		assertEquals(expectedSavedPerson.getFirstName(), personDTO.getFirstName());
+		assertEquals(expectedSavedPerson.getLastName(), personDTO.getLastName());
+		assertEquals(expectedSavedPerson.getCpf(), personDTO.getCpf());
+		assertEquals(expectedSavedPerson.getBirthDate().toString(), personDTO.getBirthDate());
 	}
 
 	@Test
@@ -75,9 +74,9 @@ public class PersonServiceTest{
 	void testGivenNoDataThenReturnAllPeopleRegistered() {
 		List<Person> expectedRegisteredPeople = Collections.singletonList(createFakeEntity());
 		PersonDTO personDTO = createFakeDTO();
+		personDTO.setId(expectedRegisteredPeople.get(0).getId());
 
 		when(personRepository.findAll()).thenReturn(expectedRegisteredPeople);
-		when(personMapper.toDTO(any(Person.class))).thenReturn(personDTO);
 
 		List<PersonDTO> expectedPeopleDTOList = personService.listAll();
 
@@ -91,7 +90,7 @@ public class PersonServiceTest{
 
 		PersonDTO updatePersonDTORequest = createFakeDTO();
 		updatePersonDTORequest.setId(updatedPersonId);
-		updatePersonDTORequest.setLastName("Peleias updated");
+		updatePersonDTORequest.setLastName("Sargeiro Gomes");
 
 		Person expectedPersonToUpdate = createFakeEntity();
 		expectedPersonToUpdate.setId(updatedPersonId);
@@ -101,12 +100,11 @@ public class PersonServiceTest{
 		expectedPersonToUpdate.setLastName(updatePersonDTORequest.getLastName());
 
 		when(personRepository.findById(updatedPersonId)).thenReturn(Optional.of(expectedPersonUpdated));
-		when(personMapper.toModel(updatePersonDTORequest)).thenReturn(expectedPersonUpdated);
 		when(personRepository.save(any(Person.class))).thenReturn(expectedPersonUpdated);
 
 		MessageResponseDTO successMessage = personService.updateById(updatedPersonId, updatePersonDTORequest);
 
-		assertEquals("Person successfully updated with ID 2", successMessage.getMessage());
+		assertEquals("Person successfully updated with ID: 2", successMessage.getMessage());
 	}
 
 	@Test

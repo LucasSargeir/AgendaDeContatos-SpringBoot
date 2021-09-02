@@ -11,7 +11,7 @@ public class PersonUtils {
 	private static final String LAST_NAME = "Sargeiro";
 	private static final String CPF_NUMBER = "123.456.789-10";
 	private static final long PERSON_ID = 1L;
-	public static final LocalDate BIRTH_DATE = LocalDate.of(2010, 10, 1);
+	public static final LocalDate BIRTH_DATE = LocalDate.of(1998, 06, 10);
 
 	public static PersonDTO createFakeDTO() {
 		return PersonDTO.builder()
